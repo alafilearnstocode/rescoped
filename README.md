@@ -69,7 +69,7 @@ To use this function, import this function and pass in the context object of a c
 ```typescript
 import { getCurrentUser } from "@/convex/users";
 
-// Note: this function already exists in the `src/convex/users.ts` file.
+
 export const currentUser = query({
   args: {},
   handler: async (ctx) => {
@@ -79,7 +79,7 @@ export const currentUser = query({
       return null;
     }
 
-    // do something with the user data here
+   
 
     return user;
   },
@@ -93,7 +93,7 @@ Use the `useAuth` hook to get the current user's data, authentication state, and
 The `useAuth` hook is defined in `src/hooks/use-auth.ts`:
 
 ```typescript
-// This file exists already in the `src/hooks/use-auth.ts` file.
+
 import { api } from "@/convex/_generated/api";
 import { useConvexAuth, useQuery } from "convex/react"
 import { useAuthActions } from "@convex-dev/auth/react"
@@ -184,7 +184,7 @@ import { AuthButton } from "@/components/auth/AuthButton";
 export default function ExampleAuthorizedPage() {
   const { isLoading, isAuthenticated, user, signIn, signOut } = useAuth();
   
-  // Handle loading state
+ 
   if (isLoading) {
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -193,7 +193,7 @@ export default function ExampleAuthorizedPage() {
     );
   }
   
-  // Handle unauthenticated state
+ 
   if (!isAuthenticated) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -203,7 +203,7 @@ export default function ExampleAuthorizedPage() {
     );
   }
   
-  // Role-based authorization check
+ 
   if (!user || user.role !== "admin") {
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -212,7 +212,7 @@ export default function ExampleAuthorizedPage() {
     );
   }
   
-  // User is authenticated and authorized
+
   return (
     <div>
       <h1>Welcome, {user.name}!</h1>
@@ -495,7 +495,7 @@ import { authTables } from "@convex-dev/auth/server";
 import { defineSchema, defineTable } from "convex/server";
 import { Infer, v } from "convex/values";
 
-// default user roles. can add / remove based on the project as needed
+
 export const ROLES = {
   ADMIN: "admin",
   USER: "user",
@@ -510,27 +510,20 @@ export const roleValidator = v.union(
 export type Role = Infer<typeof roleValidator>;
 
 const schema = defineSchema({
-  // default auth tables using convex auth.
-  ...authTables, // do not remove or modify
 
-  // the users table is the default users table that is brought in by the authTables
+  ...authTables, 
+
+ 
   users: defineTable({
-    name: v.optional(v.string()), // name of the user. do not remove
-    image: v.optional(v.string()), // image of the user. do not remove
-    email: v.optional(v.string()), // email of the user. do not remove
-    emailVerificationTime: v.optional(v.number()), // email verification time. do not remove
-    isAnonymous: v.optional(v.boolean()), // is the user anonymous. do not remove
+    name: v.optional(v.string()), 
+    image: v.optional(v.string()), 
+    email: v.optional(v.string()), 
+    emailVerificationTime: v.optional(v.number()), 
+    isAnonymous: v.optional(v.boolean()), 
     
-    role: v.optional(roleValidator), // role of the user. do not remove
+    role: v.optional(roleValidator), 
   })
-    .index("email", ["email"]) // index for the email. do not remove or modify
-  
-  // add other tables here
-
-  // tableName: defineTable({
-  //   ...
-  //   // table fields
-  // }).index("by_field", ["field"])
+    .index("email", ["email"]) 
 
 },
 {
